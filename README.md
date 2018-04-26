@@ -1,4 +1,4 @@
-# ksp-darkmultiplayer-server-status-webpage
+# ksp-darkmultiplayer-control-status-webpage
 Work in progress. A webpage to control a remote Kerbal Space Program DarkMultiPlayer server.
 
 WIP screenshot of webpage:
