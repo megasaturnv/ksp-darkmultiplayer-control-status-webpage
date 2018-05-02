@@ -1,5 +1,5 @@
 <?php
-//Note: Web server user (e.g. www-data) must have read/write access to log file and read access to id_rsa file
+//Note: Web server user (e.g. www-data) must have read/write access to log files and read access to id_rsa file
 
 $LOG_ERROR_ENABLED                     = True;
 $LOG_FILE_ERROR                        = '/var/www/html/ksp_dmp_Error.log'; //The location where a log of errors should be stored
