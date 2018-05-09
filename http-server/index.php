@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <?php
 require 'settings.inc.php';
 
@@ -72,41 +73,52 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
 	* {
 		font-family: Consolas;
 	}
+	h1 {
+		margin: 10px;
+	}
+	td {
+		padding: 10px;
+	}
+	textarea {
+		height: 150px;
+		width: 100%;
+	}
 	.button {
 		background-color: #e7e7e7; /* Grey */
-		padding: 10px 50px;
+		padding: 10px 30px;
 		border: none;
 		border-radius: 10px;
-		margin: 10px 10px;
+		margin: 0px;
 		color: #fff;
 		text-align: center;
 		text-decoration: none;
 		display: inline-block;
-		font-size: 16pt;
+		font-size: 14pt;
 		cursor: pointer;
 		outline: none;
-		width: 400px;
-		height: 80px;
+		width: 280px;
+		height: 70px;
 		box-shadow: 0 9px #999;
 	}
-
 	.button:active {
 		box-shadow: 0 5px #666;
 		transform: translateY(4px);
 	}
+	.buttonred        {background-color: #f44336;} /* Red */
+	.buttonred:hover  {background-color: #c44336;}
+	.buttonred:active {background-color: #c44336;}
 
 	.buttongreen         {background-color: #4eaf50;} /* Green */
 	.buttongreen:hover   {background-color: #3e8e41;}
 	.buttongreen:active  {background-color: #3e8e41;}
 
-	.buttonred        {background-color: #f44336;} /* Red */
-	.buttonred:hover  {background-color: #c44336;}
-	.buttonred:active {background-color: #c44336;}
-
 	.buttonblue        {background-color: #6479fc;} /* Blue */
 	.buttonblue:hover  {background-color: #5061c9;}
 	.buttonblue:active {background-color: #5061c9;}
 
+	.buttonamber        {background-color: #ffbf00;} /* Amber */
+	.buttonamber:hover  {background-color: #efaf00;}
+	.buttonamber:active {background-color: #efaf00;}
 </style>
 </head>
 <body>
@@ -126,73 +138,98 @@ if (isset($_POST['Action'])) {
 </div>
 <table>
 	<tr>
-		<td>
+		<td colspan="4">
 			<form method="post" action="<?php echo $_SERVER['REQUEST_URI'] ?>">
 				<button class="button buttongreen" type="submit" name="Action" value="on" title="Send 'wakeonlan' request to KSP DarkMultiPlayer server">Turn KSP Server On</button>
 			</form>
 		</td>
-		<td>
+		<td colspan="4">
 			<form method="post" action="<?php echo $_SERVER['REQUEST_URI'] ?>">
 				<button class="button buttonred" type="submit" name="Action" value="off" title="Shutdown KSP DarkMultiPlayer server" onclick="return confirm('Are you sure you want to turn off the server?');">Turn KSP Server Off</button>
 			</form>
 		</td>
+		<td colspan="4">
+			<form method="post" action="<?php echo $_SERVER['REQUEST_URI'] ?>">
+				<button class="button buttonamber" type="submit" name="Action" value="status" title="Check if KSP DarkMultiPlayer server is online or offline">Check Server Status</button>
+			</form>
+		</td>
 	</tr>
 	<tr>
-		<td>
+		<td colspan="4">
+			<form method="post" action="<?php echo $_SERVER['REQUEST_URI'] ?>">
+				<button class="button buttongreen" type="submit" name="Action" value="startservice" title="Start DarkMultiPlayer Service" disabled="disabled">Start DarkMultiPlayer Service (WIP)</button>
+			</form>
+		</td>
+		<td colspan="4">
+			<form method="post" action="<?php echo $_SERVER['REQUEST_URI'] ?>">
+				<button class="button buttonred" type="submit" name="Action" value="stopservice" title="Stop DarkMultiPlayer Service" disabled="disabled">Stop DarkMultiPlayer service (WIP)</button>
+			</form>
+		</td>
+		<td colspan="4">
+			<form method="post" action="<?php echo $_SERVER['REQUEST_URI'] ?>">
+				<button class="button buttonamber" type="submit" name="Action" value="backup" title="Create a backup of the KSP DarkMultiPlayer universe" disabled="disabled">Backup the KSP Universe (WIP)</button>
+			</form>
+		</td>
+	</tr>
+	<tr>
+		<td colspan="4"></td>
+		<td colspan="4"></td>
+		<td colspan="4">
+			<form method="post" action="<?php echo $_SERVER['REQUEST_URI'] ?>">
+				<button class="button buttonamber" type="submit" name="Action" value="update" title="Run DMPUpdater.exe" disabled="disabled">Update KSP DarkMultiPlayer (WIP)</button>
+			</form>
+		</td>
+	</tr>
+	<tr><td><br /></td></tr>
+	<tr>
+		<td colspan="4">
 			<form method="post" action="<?php echo $_SERVER['REQUEST_URI'] ?>">
 				<button class="button buttonblue" type="submit" name="Command" value="/dekessler" title="Clears out debris from the server">/dekessler</button>
 			</form>
 		</td>
-		<td>
+		<td colspan="4">
 			<form method="post" action="<?php echo $_SERVER['REQUEST_URI'] ?>">
 				<button class="button buttonblue" type="submit" name="Command" value="/nukeksc" title="Clears ALL vessels from KSC and the Runway">/nukeksc</button>
 			</form>
 		</td>
 	</tr>
 	<tr>
-		<td>
+		<td colspan="4">
 			<form method="post" action="<?php echo $_SERVER['REQUEST_URI'] ?>">
 				<button class="button buttonblue" type="submit" name="Command" value="/listclients" title="Lists connected clients">/listclients</button>
 			</form>
 		</td>
-		<td>
+		<td colspan="4">
 			<form method="post" action="<?php echo $_SERVER['REQUEST_URI'] ?>">
 				<button class="button buttonblue" type="submit" name="Command" value="/countclients" title="Counts connected clients">/countclients</button>
 			</form>
 		</td>
 	</tr>
 	<tr>
-		<td>
+		<td colspan="4">
 			<form method="post" action="<?php echo $_SERVER['REQUEST_URI'] ?>">
 				<button class="button buttonblue" type="submit" name="Command" value="/connectionstats" title="Displays network traffic usage" disabled="disabled">/connectionstats (WIP)</button>
 			</form>
 		</td>
-		<td>
+		<td colspan="4">
 			<form method="post" action="<?php echo $_SERVER['REQUEST_URI'] ?>">
 				<button class="button buttonblue" type="submit" name="Action" value="clearUnknownObjectAsteroids" title="Clear unknown objects (Untracked asteroids) from the universe" disabled="disabled">Clear unknown objects (WIP)</button>
 			</form>
 		</td>
 	</tr>
 	<tr>
-		<td>
-			<form method="post" action="<?php echo $_SERVER['REQUEST_URI'] ?>">
-				<button class="button buttonGreen" type="submit" name="Action" value="status" title="Check if KSP DarkMultiPlayer server is online or offline">Check Server Status</button>
-			</form>
-		</td>
+		<td colspan="6"><b>Messages:</b></td>
+		<td colspan="6"><b>Command Output:</b></td>
 	</tr>
 	<tr>
-		<td><b>Messages:</b></td>
-		<td><b>Command Output:</b></td>
-	</tr>
-	<tr>
-		<td>
-			<textarea style="height:150px; width:100%" name="TextareaMessages" disabled="disabled"><?php
+		<td colspan="6">
+			<textarea name="TextareaMessages" disabled="disabled"><?php
 			if (isset($message)) {
 				echo $message;
 			} ?></textarea>
 		</td>
-		<td>
-			<textarea style="height:150px; width:100%" name="TextareaOutput" disabled="disabled"><?php
+		<td colspan="6">
+			<textarea name="TextareaOutput" disabled="disabled"><?php
 			if (isset($output)) {
 				echo $output;
 			} ?></textarea>
