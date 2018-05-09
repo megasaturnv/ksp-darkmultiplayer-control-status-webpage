@@ -82,9 +82,9 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
 	textarea {
 		height: 150px;
 		width: 100%;
+		background-color: #e8e8e8; /* Light grey */
 	}
 	.button {
-		background-color: #e7e7e7; /* Grey */
 		padding: 10px 30px;
 		border: none;
 		border-radius: 10px;
@@ -223,13 +223,13 @@ if (isset($_POST['Action'])) {
 	</tr>
 	<tr>
 		<td colspan="6">
-			<textarea name="TextareaMessages" disabled="disabled"><?php
+			<textarea name="TextareaMessages" readonly><?php
 			if (isset($message)) {
 				echo $message;
 			} ?></textarea>
 		</td>
 		<td colspan="6">
-			<textarea name="TextareaOutput" disabled="disabled"><?php
+			<textarea name="TextareaOutput" readonly><?php
 			if (isset($output)) {
 				echo $output;
 			} ?></textarea>
