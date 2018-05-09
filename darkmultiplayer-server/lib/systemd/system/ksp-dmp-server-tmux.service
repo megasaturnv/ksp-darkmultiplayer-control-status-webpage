@@ -1,0 +1,13 @@
+[Unit]
+Description=ksp-dmp-server-tmux
+After=network.target
+
+[Service]
+WorkingDirectory=/root/DMPServer/
+Type=forking
+User=root
+ExecStart=/bin/bash /root/startKspDmpServer.sh
+ExecStop=/bin/bash /root/stopKspDmpServer.sh
+
+[Install]
+WantedBy=multi-user.target
