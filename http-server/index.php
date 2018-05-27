@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <?php
 require 'settings.inc.php';
 
@@ -45,6 +44,10 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
 			$output = '(ssh -q -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -i \'' .$DMP_SERVER_SSH_PRIVATE_KEY_PATH. '\' ' .$DMP_SERVER_SSH_USERNAME. '@' .$DMP_SERVER_SSH_HOSTNAME_IP. ' grep -rlZ PotatoRoid ' .$DMP_SERVER_UNIVERSE_VESSELS_DIRECTORY. ' | xargs --null rm -f) 2>&1';
 			//To do: Implement alternative option and move unknown objects to another location instead of deleting them. Remember to execute command after testing is complete
 		}
+		if ($LOG_ACTION_ENABLED) {
+			$logFileMessage = trim(preg_replace('/\s+/', ' ',  date('Y-m-d H:i:s') . ' - IP: ' .$_SERVER['REMOTE_ADDR']. ' - ' .$_SERVER['REQUEST_METHOD']. ' - Message: ' .$message. ' - Output: ' .$output));
+			file_put_contents("$LOG_FILE_ACTION", $logFileMessage . PHP_EOL, FILE_APPEND);
+		}
 	}
 	if (isset($_POST['Command'])) {
 		if (in_array($_POST['Command'], $VALID_KSP_DMP_COMMANDS_ARRAY)) { //Check if $_POST["Command"] is in an array of valid commands
@@ -76,19 +79,12 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
 	h1 {
 		margin: 10px;
 	}
-	td {
-		padding: 10px;
-	}
-	textarea {
-		height: 150px;
-		width: 100%;
-		background-color: #e8e8e8; /* Light grey */
-	}
 	.button {
+		background-color: #e7e7e7; /* Grey */
 		padding: 10px 30px;
 		border: none;
 		border-radius: 10px;
-		margin: 0px;
+		margin: 5px 5px;
 		color: #fff;
 		text-align: center;
 		text-decoration: none;
@@ -97,13 +93,15 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
 		cursor: pointer;
 		outline: none;
 		width: 280px;
-		height: 70px;
+		height: 80px;
 		box-shadow: 0 9px #999;
 	}
+
 	.button:active {
 		box-shadow: 0 5px #666;
 		transform: translateY(4px);
 	}
+
 	.buttonred        {background-color: #f44336;} /* Red */
 	.buttonred:hover  {background-color: #c44336;}
 	.buttonred:active {background-color: #c44336;}
@@ -157,7 +155,7 @@ if (isset($_POST['Action'])) {
 	<tr>
 		<td colspan="4">
 			<form method="post" action="<?php echo $_SERVER['REQUEST_URI'] ?>">
-				<button class="button buttongreen" type="submit" name="Action" value="startservice" title="Start DarkMultiPlayer Service" disabled="disabled">Start DarkMultiPlayer Service (WIP)</button>
+				<button class="button buttongreen" type="submit" name="Action" value="startservice" title="Start DarkMultiPlayer Service (WIP)" disabled="disabled">Start DarkMultiPlayer Service (WIP)</button>
 			</form>
 		</td>
 		<td colspan="4">
@@ -223,13 +221,13 @@ if (isset($_POST['Action'])) {
 	</tr>
 	<tr>
 		<td colspan="6">
-			<textarea name="TextareaMessages" readonly><?php
+			<textarea style="height:150px; width:100%" name="TextareaMessages" disabled="disabled"><?php
 			if (isset($message)) {
 				echo $message;
 			} ?></textarea>
 		</td>
 		<td colspan="6">
-			<textarea name="TextareaOutput" readonly><?php
+			<textarea style="height:150px; width:100%" name="TextareaOutput" disabled="disabled"><?php
 			if (isset($output)) {
 				echo $output;
 			} ?></textarea>
