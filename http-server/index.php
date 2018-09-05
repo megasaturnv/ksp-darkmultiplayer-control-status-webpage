@@ -27,7 +27,7 @@ if ($LOG_ACCESS_ENABLED) {
 //echo var_dump($_SERVER);
 if($_SERVER['REQUEST_METHOD'] == 'POST') {
 	//echo var_dump($_POST);
-	if (isset($_POST['Action']))
+	if (isset($_POST['Action'])) {
 		if ($_POST['Action'] == 'on') {
 			$message = 'Turning on server...';
 			$output = shell_exec('wakeonlan "' .$DMP_SERVER_MAC_ADDRESS. '"');
@@ -68,6 +68,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
 			$message .= '\nError. Command failed'; //Display an error because the command had no output
 		}
 	}
+}
 ?>
 <html>
 <head>
