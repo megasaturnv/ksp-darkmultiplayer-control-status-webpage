@@ -53,7 +53,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
 		if (in_array($_POST['Command'], $VALID_KSP_DMP_COMMANDS_ARRAY)) { //Check if $_POST["Command"] is in an array of valid commands
 			//Execute the command, $_POST['Command'], as stdin for DMPServer.exe by commecting to the tmux session in which DMPServer.exe is running
 			$output = shell_exec('(ssh -q -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -i \'' .$DMP_SERVER_SSH_PRIVATE_KEY_PATH. '\' ' .$DMP_SERVER_SSH_USERNAME. '@' .$DMP_SERVER_SSH_HOSTNAME_IP. ' "tmux send-keys \'' .$_POST['Command']. '\' C-m ; sleep 1 ; tmux capture-pane -pJ") | sed \'/^\s*$/d\' | tail -n 2');
-			//To do: Allow te above command to handle multiline-outputs from DMPServer.exe. For example, the command '/connectionstats'
+			//To do: Allow the above command to handle multiline-outputs from DMPServer.exe. For example, the command '/connectionstats'
 			$message = 'Executing command: ' .$_POST['Command'];
 		} else {
 			$message = 'Command not valid: "' .$_POST['Command']. '"'; //If command is not valid, return an error
