@@ -65,7 +65,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
 	}
 	if (isset($message)) {
 		if ($output == '' && $message != '') { //If output is empty, but message contains something
-			$message .= '\nError. Command failed'; //Display an error because the command had no output
+			$message .= "\nError. Command failed"; //Display an error because the command had no output
 		}
 	}
 }
