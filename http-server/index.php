@@ -37,6 +37,12 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
 		} elseif ($_POST['Action'] == 'status') {
 			$message = 'Checking server status...';
 			$output = ' ';
+		} elseif ($_POST['Action'] == 'startservice') {
+			$message = 'Starting KSP DMP service...';
+			$output = shell_exec('(ssh -q -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -i \'' .$DMP_SERVER_SSH_PRIVATE_KEY_PATH. '\' ' .$DMP_SERVER_SSH_USERNAME. '@' .$DMP_SERVER_SSH_HOSTNAME_IP. ' systemctl start ksp-dmp-server-tmux && echo ksp-dmp-server-tmux service started) 2>&1');
+		} elseif ($_POST['Action'] == 'stopservice') {
+			$message = 'Stopping KSP DMP service...';
+			$output = shell_exec('(ssh -q -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -i \'' .$DMP_SERVER_SSH_PRIVATE_KEY_PATH. '\' ' .$DMP_SERVER_SSH_USERNAME. '@' .$DMP_SERVER_SSH_HOSTNAME_IP. ' systemctl stop ksp-dmp-server-tmux && echo ksp-dmp-server-tmux service stopped) 2>&1');
 		} elseif ($_POST['Action'] == 'clearUnknownObjectAsteroids') {
 			$message = 'Clearing unknown objects... (Untracked asteroids)';
 			//Commented out for testing: $output = shell_exec'(ssh -q -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -i \'' .$DMP_SERVER_SSH_PRIVATE_KEY_PATH. '\' ' .$DMP_SERVER_SSH_USERNAME. '@' .$DMP_SERVER_SSH_HOSTNAME_IP. ' grep -rlZ PotatoRoid ' .$DMP_SERVER_UNIVERSE_VESSELS_DIRECTORY. ' | xargs --null rm -f) 2>&1';
@@ -156,12 +162,12 @@ if (isset($_POST['Action'])) {
 	<tr>
 		<td colspan="4">
 			<form method="post" action="<?php echo $_SERVER['REQUEST_URI'] ?>">
-				<button class="button buttongreen" type="submit" name="Action" value="startservice" title="Start DarkMultiPlayer Service (WIP)" disabled="disabled">Start DarkMultiPlayer Service (WIP)</button>
+				<button class="button buttongreen" type="submit" name="Action" value="startservice" title="Start DarkMultiPlayer Service">Start DarkMultiPlayer Service</button>
 			</form>
 		</td>
 		<td colspan="4">
 			<form method="post" action="<?php echo $_SERVER['REQUEST_URI'] ?>">
-				<button class="button buttonred" type="submit" name="Action" value="stopservice" title="Stop DarkMultiPlayer Service" disabled="disabled">Stop DarkMultiPlayer service (WIP)</button>
+				<button class="button buttonred" type="submit" name="Action" value="stopservice" title="Stop DarkMultiPlayer Service">Stop DarkMultiPlayer service</button>
 			</form>
 		</td>
 		<td colspan="4">
