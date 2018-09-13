@@ -36,7 +36,11 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
 			$output = shell_exec('(ssh -q -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -i \'' .$DMP_SERVER_SSH_PRIVATE_KEY_PATH. '\' ' .$DMP_SERVER_SSH_USERNAME. '@' .$DMP_SERVER_SSH_HOSTNAME_IP. ' poweroff) 2>&1');
 		} elseif ($_POST['Action'] == 'status') {
 			$message = 'Checking server status...';
-			$output = ' ';
+			if (shell_exec('nc -z -v -w 2 ' .$DMP_SERVER_SSH_HOSTNAME_IP. ' ' .$DMP_SERVER_PORT. ' > /dev/null 2>&1; echo -n $?') == '0') { //To do: Find a way to test if port is open/closed in PHP, without netcat
+				$output = 'Online';
+			} else {
+				$output = 'Offline';
+			}
 		} elseif ($_POST['Action'] == 'startservice') {
 			$message = 'Starting KSP DMP service...';
 			$output = shell_exec('(ssh -q -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -i \'' .$DMP_SERVER_SSH_PRIVATE_KEY_PATH. '\' ' .$DMP_SERVER_SSH_USERNAME. '@' .$DMP_SERVER_SSH_HOSTNAME_IP. ' systemctl start ksp-dmp-server-tmux && echo ksp-dmp-server-tmux service started) 2>&1');
@@ -132,10 +136,12 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
 if (isset($_POST['Action'])) {
 	if ($_POST['Action'] == 'status') {
 		echo '. Status: ';
-		if (shell_exec('nc -z -v -w 2 ' .$DMP_SERVER_SSH_HOSTNAME_IP. ' ' .$DMP_SERVER_PORT. ' > /dev/null 2>&1; echo -n $?') == '0') { //To do: Find a way to test if port is open/closed in PHP, without netcat
+		if ($output == 'Online') {
 			echo '<span style="color:#4eaf50">Online</span>';
-		} else {
+		} else if ($output == 'Offline') {
 			echo '<span style="color:#f44336">Offline</span>';
+		} else {
+			echo 'Unknown';
 		}
 	}
 }
